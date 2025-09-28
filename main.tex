@@ -124,6 +124,31 @@ y_{10} &= \neg x_{7}\oplus y_{4}\oplus y_{9}
 \[(x_1\otimes y_{1,4,7}\otimes y_{1,2,3}\otimes y_{1,10,19})\land\dots\land(x_{27}\otimes y_{25,26,27}\otimes y_{21,24,27}\otimes y_{9,18,27})\]
 \[y_{1,2,3}\otimes\dots\otimes y_{25,26,27}=x_1\otimes\dots\otimes x_{27}\]
 \section{General case}
-\subsection{Even case}
+\[
+f: x_{i,j,k}\mapsto (y_{-,j,k},y_{i,-,k},y_{i,j,-})
+\]
+\[
+\bigwedge_{i=1,\dots,n}\bigwedge_{j=1,\dots,n}\bigwedge_{k=1,\dots,n}x_{i,j,k}\oplus y_{-,j,k}\oplus y_{i,-,k}\oplus y_{i,j,-}
+\]
+\[
+\begin{cases}
+    x_{1,1,1}\oplus y_{-,1,1}\oplus y_{1,-,1}\oplus y_{1,1,-} &= 1 \\
+    &\vdots \\
+    x_{i,j,k}\oplus y_{-,j,k}\oplus y_{i,-,k}\oplus y_{i,j,-} &= 1 \\
+    &\vdots \\
+    x_{n,n,n}\oplus y_{-,n,n}\oplus y_{n,-,n}\oplus y_{n,n,-} &= 1
+\end{cases}
+\]
+掃き出し法の最中で矛盾行が存在するとすれば、それはすべての行を足した時のみである。
+なぜならば係数行列を足した時０となるのは、各変数について偶数回ずつ足す時のみだからである。
+しかし、変数の表れ方から係数がすべて偶数になりうるのは、総和の時のみであり、
+それもnが偶数の時しか発生しない。
+\[
+\bigoplus_n y_{-,1,1}\oplus\dots\oplus\bigoplus_n y_{n,n,-} = x_{1,1,1}\oplus\dots\oplus x_{n,n,n}
+\]
+\[\bigoplus_n y_{*,*,*} = \begin{cases}
+0 & \text{if n is even} \\
+y_{*,*,*} & \text{if n is odd}
+\end{cases}\]
 \subsection{Odd case}
 \end{document}
