@@ -1,1 +1,129 @@
+\documentclass{article}
 
+\usepackage{amsmath}
+\begin{document}
+\section*{問題}
+$n \geq 1$ を整数とする．同じサイズの立方体型ランプを隙間なく $n^3$ 個並べて，
+全体として $n \times n \times n$ の大きな立方体を作る．すると，その外面には各面に
+$n \times n$ 個，計 $6n^2$ 個の小正方形（外側に見えているランプの外面）が現れる．
+各ランプは \texttt{on/off} のいずれかの状態をもち，外面の小正方形のうち一つを押すと，
+その小正方形とちょうど反対側にある小正方形を結ぶ直線上
+の $n$ 個のランプだけが同時に反転（on $\leftrightarrow$ off）する．
+全ランプの \texttt{on/off} の状態が与えられたとき，
+上記の操作の繰り返しのみですべてのランプを \texttt{off} にできるための
+必要十分条件をなるべく簡潔に記述し，その条件の正しさを証明せよ．
+
+\section{Small example}
+例として、まず \(2\times 2\times 2\) の立方体を考えます。
+点灯パターンは次のように書かれます:
+\[x_1,x_2,x_3,x_4,x_5,x_6,x_7,x_8 \in \mathbb{2} \]
+\[
+\xymatrix{
+    & x_5 \ar@{-}[ld] \ar@{-}[rr] & & x_6 \ar@{-}[ld] \ar@{-}[dd] \\
+    x_1 \ar@{-}[rr] & & x_2 \ar@{-}[dd] \\
+    & x_8 \ar@{-}[ld] \ar@{-}[uu] & & x_7 \ar@{-}[ld] \ar@{-}[ll] \\
+    x_4 \ar@{-}[uu] & & x_3 \ar@{-}[ll]
+}
+\]
+切り替えパターンは次のように書かれます:
+\[y_1,y_2,y_3,y_4,y_5,y_6,y_7,y_8,y_9,y_{10},y_{11},y_{12}\]
+\[
+\xymatrix{
+    & x_5 \ar@{-}[ld]|{y_1} \ar@{-}[rr]|{y_2} & & x_6 \ar@{-}[ld]|{y_3} \ar@{-}[dd]|{y_4} \\
+    x_1 \ar@{-}[rr]|(0.3){y_5} & & x_2 \ar@{-}[dd]|(0.3){y_6} \\
+    & x_8 \ar@{-}[ld]|{y_7} \ar@{-}[uu]|(0.3){y_8} & & x_7 \ar@{-}[ld]|{y_9} \ar@{-}[ll]|(0.3){y_{10}} \\
+    x_4 \ar@{-}[uu]|{y_{11}} & & x_3 \ar@{-}[ll]|{y_{12}}
+}
+\]
+1回の切り替え操作は \(y_i = 1 (\mathrm{true})\) に対応します。  
+切り替え後、光の結果は \(y_i\) と接続された \(x_n\) および \(x_m\) に対して  
+\(x_n\oplus y_i\)、\(x_m\oplus y_i\) となります。したがって、全てのライトが同一の点灯を持つというのは、与えられた \(x_1,\dots,x_8\) に対して、次の式を満たす \(y_1,\dots,y_{12}\) が存在する時です。
+\[
+(x_1\oplus y_1 \oplus y_5 \oplus y_{11}) 
+\land \cdots \land 
+(x_8\oplus y_8 \oplus y_7 \oplus y_{10})
+\]
+
+\begin{align}
+&(x_{1} \oplus y_{1} \oplus y_{11} \oplus y_{5}) \land\\
+&(x_{2} \oplus y_{3} \oplus y_{5} \oplus y_{6}) \land\\
+&(x_{3} \oplus y_{12} \oplus y_{6} \oplus y_{9}) \land\\
+&(x_{4} \oplus y_{11} \oplus y_{12} \oplus y_{7}) \land\\
+&(x_{5} \oplus y_{1} \oplus y_{2} \oplus y_{8}) \land\\
+&(x_{6} \oplus y_{2} \oplus y_{3} \oplus y_{4}) \land\\
+&(x_{7} \oplus y_{4} \oplus y_{9} \oplus y_{10}) \land\\
+&(x_{8} \oplus y_{10} \oplus y_{7} \oplus y_{8})
+\end{align}
+
+各辺に対して2回以上の切り替え操作の必要性を考慮する必要があります。  
+どのタイミングでも、切り替え回数が奇数であれば1回の切り替えに帰着し、偶数であれば切り替えなしに帰着します。  
+これは排他的論理和（XOR）の計算によるものです。
+以上の議論から以下の連立方程式が立式できる。
+\begin{displaymath}
+\begin{cases}
+x_{1} \oplus y_{1} \oplus y_{11} \oplus y_{5} &= 1 \\
+x_{2} \oplus y_{3} \oplus y_{5} \oplus y_{6} &= 1 \\
+x_{3} \oplus y_{12} \oplus y_{6} \oplus y_{9} &= 1 \\
+x_{4} \oplus y_{11} \oplus y_{12} \oplus y_{7} &= 1 \\
+x_{5} \oplus y_{1} \oplus y_{2} \oplus y_{8} &= 1 \\
+x_{6} \oplus y_{2} \oplus y_{3} \oplus y_{4} &= 1 \\
+x_{7} \oplus y_{4} \oplus y_{9} \oplus y_{10} &= 1 \\
+x_{8} \oplus y_{10} \oplus y_{7} \oplus y_{8} &= 1 
+\end{cases}
+\end{displaymath}
+したがって
+\begin{displaymath}
+\begin{cases}
+y_{1} \oplus y_{11} \oplus y_{5} &= \neg x_{1} \\
+y_{3} \oplus y_{5} \oplus y_{6} &= \neg x_{2} \\
+y_{12} \oplus y_{6} \oplus y_{9} &= \neg x_{3} \\
+y_{11} \oplus y_{12} \oplus y_{7} &= \neg x_{4} \\
+y_{1} \oplus y_{2} \oplus y_{8} &= \neg x_{5} \\
+y_{2} \oplus y_{3} \oplus y_{4} &= \neg x_{6} \\
+y_{4} \oplus y_{9} \oplus y_{10} &= \neg x_{7} \\
+y_{10} \oplus y_{7} \oplus y_{8} &= \neg x_{8} 
+\end{cases}
+\end{displaymath}
+両辺の排他的論理和をとってみると
+\begin{align*}
+(y_{1} \oplus y_{11} \oplus y_{5})\oplus\dots\oplus(y_{10} \oplus y_{7} \oplus y_{8})
+&= \neg x_{1}\oplus\dots\oplus\neg x_{8} \\
+0 &= \neg x_{1}\oplus\dots\oplus\neg x_{8} \\
+0 &= x_{1}\oplus\dots\oplus x_{8}
+\end{align*}
+つまり \(y_i\)の値に関係なく \(x_j\)は上記の条件を満たす必要がある。
+では、これが必要条件になっていることを示す。つまり、
+\(0 = x_{1}\oplus\dots\oplus x_{8}\)である時に、条件を満たす \(y_i\)が存在することを示す。
+これは吐き出し法で解ける。\(y_{5},y_{6},y_{8},y_{9},y_{11}\)を自由変数として、以下のように \(y_i\)を構成できる。
+\begin{align}
+y_{1}  &= \neg x_{1}\oplus y_{5}\oplus y_{11}\\
+y_{3}  &= \neg x_{2}\oplus y_{5}\oplus y_{6}\\
+y_{12} &= \neg x_{3}\oplus y_{6}\oplus y_{9}\\
+y_{7}  &= \neg x_{4}\oplus y_{11}\oplus y_{12}\\
+y_{2}  &= \neg x_{5}\oplus y_{1}\oplus y_{8}\\
+y_{4}  &= \neg x_{6}\oplus y_{2}\oplus y_{3}\\
+y_{10} &= \neg x_{7}\oplus y_{4}\oplus y_{9}
+\end{align}
+
+\section{Larger example}
+\[
+\xymatrix{
+    & & x_{1} \ar@{-}[ddd]|(0.66)\hole \ar@{-}[rr] \ar@{-}[dl] & & x_{2} \ar@{-}[ddd]|(0.66)\hole \ar@{-}[rr] \ar@{-}[dl] & & x_{3} \ar@{-}[ddd] \ar@{-}[dl]  \\
+    & x_{4} \ar@{-}[ddd] \ar@{-}[rr] \ar@{-}[dl] & & x_{5} \ar@{-}[ddd] \ar@{-}[rr] \ar@{-}[dl] & & x_{6} \ar@{-}[ddd] \ar@{-}[dl] \\
+    x_{7} \ar@{-}[ddd] \ar@{-}[rr] & & x_{8} \ar@{-}[ddd]|(0.33)\hole \ar@{-}[rr] & & x_{9} \ar@{-}[ddd]|(0.33)\hole \\
+
+    & & x_{10} \ar@{-}[ddd]|(0.66)\hole \ar@{-}[rr] \ar@{-}[dl] & & x_{11} \ar@{-}[ddd]|(0.66)\hole \ar@{-}[rr] \ar@{-}[dl] & & x_{12} \ar@{-}[ddd] \ar@{-}[dl]  \\
+    & x_{13} \ar@{-}[ddd] \ar@{-}[rr] \ar@{-}[dl] & & x_{14} \ar@{-}[ddd] \ar@{-}[rr] \ar@{-}[dl] & & x_{15} \ar@{-}[ddd] \ar@{-}[dl] \\
+    x_{16} \ar@{-}[ddd] \ar@{-}[rr] & & x_{17} \ar@{-}[ddd]|(0.33)\hole \ar@{-}[rr] & & x_{18} \ar@{-}[ddd]|(0.33)\hole \\
+    
+    & & x_{19} \ar@{-}[rr] \ar@{-}[dl] & & x_{20} \ar@{-}[rr] \ar@{-}[dl] & & x_{21} \ar@{-}[dl]  \\
+    & x_{22} \ar@{-}[rr] \ar@{-}[dl] & & x_{23} \ar@{-}[rr] \ar@{-}[dl] & & x_{24} \ar@{-}[dl] \\
+    x_{25} \ar@{-}[rr] & & x_{26} \ar@{-}[rr] & & x_{27}
+}
+\]
+\[(x_1\otimes y_{1,4,7}\otimes y_{1,2,3}\otimes y_{1,10,19})\land\dots\land(x_{27}\otimes y_{25,26,27}\otimes y_{21,24,27}\otimes y_{9,18,27})\]
+\[y_{1,2,3}\otimes\dots\otimes y_{25,26,27}=x_1\otimes\dots\otimes x_{27}\]
+\section{General case}
+\subsection{Even case}
+\subsection{Odd case}
+\end{document}
