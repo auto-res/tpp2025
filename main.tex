@@ -98,29 +98,22 @@ y_{4}  &= \neg x_{6}\oplus y_{2}\oplus y_{3}\\
 y_{10} &= \neg x_{7}\oplus y_{4}\oplus y_{9}
 \end{align}
 
-\section{Larger example}
-\[
-\xymatrix{
-    & & x_{1} \ar@{-}[ddd]|(0.33){\hole}|(0.66){\hole} \ar@{-}[rr] \ar@{-}[dl] & & x_{2} \ar@{-}[ddd]|(0.33){\hole}|(0.66){\hole} \ar@{-}[rr] \ar@{-}[dl] & & x_{3} \ar@{-}[ddd] \ar@{-}[dl]  \\
-    & x_{4} \ar@{-}[ddd]|(0.33){\hole} \ar@{-}[rr] \ar@{-}[dl] & & x_{5} \ar@{-}[ddd]|(0.33){\hole} \ar@{-}[rr] \ar@{-}[dl] & & x_{6} \ar@{-}[ddd] \ar@{-}[dl] \\
-    x_{7} \ar@{-}[ddd] \ar@{-}[rr] & & x_{8} \ar@{-}[ddd]|(0.33){\hole} \ar@{-}[rr] & & x_{9} \ar@{-}[ddd]|(0.33){\hole} \\
-    & & x_{10} \ar@{-}[ddd]|(0.66){\hole} \ar@{-}[rr]|(0.5){\hole} \ar@{-}[dl] & & x_{11} \ar@{-}[ddd]|(0.66){\hole} \ar@{-}[rr]|(0.5){\hole} \ar@{-}[dl] & & x_{12} \ar@{-}[ddd] \ar@{-}[dl]  \\
-    & x_{13} \ar@{-}[ddd]|(0.33){\hole} \ar@{-}[rr]|(0.5){\hole} \ar@{-}[dl] & & x_{14} \ar@{-}[ddd]|(0.33){\hole} \ar@{-}[rr]|(0.5){\hole} \ar@{-}[dl] & & x_{15} \ar@{-}[ddd] \ar@{-}[dl] \\
-    x_{16} \ar@{-}[ddd] \ar@{-}[rr] & & x_{17} \ar@{-}[ddd]|(0.33){\hole} \ar@{-}[rr] & & x_{18} \ar@{-}[ddd]|(0.33){\hole} \\
-    & & x_{19} \ar@{-}[rr]|(0.5){\hole} \ar@{-}[dl] & & x_{20} \ar@{-}[rr]|(0.5){\hole} \ar@{-}[dl] & & x_{21} \ar@{-}[dl]  \\
-    & x_{22} \ar@{-}[rr]|(0.5){\hole} \ar@{-}[dl] & & x_{23} \ar@{-}[rr]|(0.5){\hole} \ar@{-}[dl] & & x_{24} \ar@{-}[dl] \\
-    x_{25} \ar@{-}[rr] & & x_{26} \ar@{-}[rr] & & x_{27}
-}
-
 \section{General case}
+
+まず、ランプの点灯パターンを次のように表します:
 
 \[
 f: x_{i,j,k}\mapsto (y_{-,j,k},y_{i,-,k},y_{i,j,-})
 \]
 
+ここで、\(1 \leq i,j,k \leq n\) です。次に、切り替えパターンが
+成立するための条件を次のように表します:
+
 \[
 \bigwedge_{\substack{1\le i\le n\\1\le j\le n\\1\le k\le n}}x_{i,j,k}\oplus y_{-,j,k}\oplus y_{i,-,k}\oplus y_{i,j,-}=1
 \]
+
+以上の議論から以下の連立方程式が立式できる
 
 \[
 \begin{cases}
@@ -132,6 +125,8 @@ f: x_{i,j,k}\mapsto (y_{-,j,k},y_{i,-,k},y_{i,j,-})
 \end{cases}
 \]
 
+すなわち、
+
 \[
 \begin{cases}
     y_{-,1,1}\oplus y_{1,-,1}\oplus y_{1,1,-} &= \lnot x_{1,1,1} \\
@@ -141,9 +136,14 @@ f: x_{i,j,k}\mapsto (y_{-,j,k},y_{i,-,k},y_{i,j,-})
     y_{-,n,n}\oplus y_{n,-,n}\oplus y_{n,n,-} &= \lnot x_{n,n,n}
 \end{cases}
 \]
+
+これが成立するのは、以下のとおりである
+
 \[
 \bigoplus_{\substack{y_=y_1,y_2\\y=y_1,y_2\\z=y_1,y_2}}\lnot x_{x,y,z}=1 \iff \bigoplus_{\substack{y_=y_1,y_2\\y=y_1,y_2\\z=y_1,y_2}} x_{x,y,z}=1
 \]
+
+したがって、この条件が必要十分条件となる。
 
 \[\bigwedge_{\substack{1\le y_1 < y_2 \le n\\1\le y_1 < y_2 \le n\\1\le y_1 < y_2 \le n}} \bigoplus_{\substack{y_=y_1,y_2\\y=y_1,y_2\\z=y_1,y_2}}x_{x,y,z}=1\]
 
