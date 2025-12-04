@@ -1,5 +1,7 @@
-\documentclass{article}
-\usepackage[whole]{bxcjkjatype}
+\documentclass{scrartcl}
+\usepackage{zxjatype}
+\usepackage[haranoaji]{zxjafont}
+
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
@@ -137,15 +139,14 @@ f: x_{i,j,k}\mapsto (y_{-,j,k},y_{i,-,k},y_{i,j,-})
 \end{cases}
 \]
 
-これが成立するのは、以下のとおりである
+このとき、掃き出し法によって解が存在するのは、右辺が1になるときである。
 
 \[
-\bigoplus_{\substack{y_=y_1,y_2\\y=y_1,y_2\\z=y_1,y_2}}\lnot x_{x,y,z}=1 \iff \bigoplus_{\substack{y_=y_1,y_2\\y=y_1,y_2\\z=y_1,y_2}} x_{x,y,z}=1
+\bigoplus_{\substack{x=x_1,x_2\\y=y_1,y_2\\z=z_1,z_2}}\lnot x_{x,y,z}=1 \iff \bigoplus_{\substack{x=x_1,x_2\\y=y_1,y_2\\z=z_1,z_2}} x_{x,y,z}=1
 \]
 
 したがって、この条件が必要十分条件となる。
 
-\[\bigwedge_{\substack{1\le y_1 < y_2 \le n\\1\le y_1 < y_2 \le n\\1\le y_1 < y_2 \le n}} \bigoplus_{\substack{y_=y_1,y_2\\y=y_1,y_2\\z=y_1,y_2}}x_{x,y,z}=1\]
-
+\[\bigwedge_{\substack{1\le x_1 < x_2 \le n\\1\le y_1 < y_2 \le n\\1\le z_1 < z_2 \le n}} \bigoplus_{\substack{x=x_1,x_2\\y=y_1,y_2\\z=z_1,z_2}}x_{x,y,z}=1\]
 
 \end{document}
